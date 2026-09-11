@@ -1,92 +1,459 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF"-8> 
-    <meta name="description" content="INRI Project - Dijital Sosyal Bilimler Portal Sitesi">
-    <meta name="keywords" content="inri archive, inri, osmanlıca, belge, çeviri, eski, dijital, dijitalleştirme, portal">
-    <title>INRI Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <link rel="icon" type="image/x-icon" href="favicon.jpg"> 
-</head>
-
+    <meta charset="UTF-8">
+    <meta name="description" content="INRI Archive - Osmanlıca Belge Çevirileri">
+    <meta name="keywords" content="inri archive, inri, osmanlıca, belge, çeviri, eski, devlet, savaş, harp, birinci dünya savaşı">
+    <title>INRI Archive</title>
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 
-    .anaresim {
-        display: flex;
-        justify-content: center;
+    body {
+        background-image: linear-gradient(rgba(239, 239, 237, 0.85), rgba(239, 239, 237, 0.85)), url(bonaparteee.webp);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #EFEFED;
+        color: #111111;            
+        font-family: "Times New Roman", Times, Georgia, serif;
+        position: relative;
+
     }
 
-    .yazi {
-        display: flex;
-        justify-content: center;
-        font-size: small;
-    }
-
-    .inria {
-        display: flex;
-        justify-content: center;
-    }
-
-    .augus {
-        position: fixed; 
-        bottom: 0px;       
-        left: 90%;          
-        transform: translateX(-50%); 
-        z-index: 9999; 
-    }
-
-    .disco {
-        position: fixed; 
-        bottom: 0px;       
-        left: 10%;          
-        transform: translateX(-50%); 
-        z-index: 9999; 
-    }
-
-    h3 {
-        display: flex;
-        justify-content: center;
-        color:#6b1010
+    h1, h2 {
+        font-weight: normal;
     }
 
     a {
+        color: #000000;
         text-decoration: none;
-        color: black;
-        font-size: 50px;
     }
 
     a:hover {
         color: #585858;
     }
 
+    .arsiv-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px 30px;                                                                                                           
+        padding: 0;
+        margin: 30px 0;
+        list-style-type: none;                                                                                                            
+    }
 
+    .arsiv-list li {
+        border-bottom: 1px dashed #d0cbae;
+        padding-bottom: 6px;
+    }
+
+    .gelecek-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px 30px;                                                                                                           
+        padding: 0;
+        margin: 30px 0;
+        list-style-type: none;
+    }
+
+    .gelecek-list li {
+        border-bottom: 1px dashed #d0cbae;
+        padding-bottom: 6px;
+     }
+
+    h1 {
+        font-size: 3.5s rem;
+        font-weight: 900;
+        letter-spacing: normal;
+        color: #000000;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+    }
+        
+    h2 {
+        font-family: Georgia, 'Times New Roman', Times, serif; 
+    }
+
+    p {
+        font-family: serif;
+        display: flex;
+        justify-content: center;
+        color:#4d1e1e
+    }
+
+    .topnav {
+        background-color: transparent; 
+        padding: 10px 0;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .search-wrapper {
+        margin-right: 100px;
+        position: relative;
+        width: 250px;
+        z-index: 1000;
+    }
+
+    .topnav input[type=text] {
+        width: 100%;
+        padding: 12px 12px;
+        border: 1px solid rgba(17, 17, 17, 0.3); 
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+        background-color: transparent; 
+        color: #111111;
+        outline: none;
+        font-family: sans-serif;
+    }
+
+    .topnav input[type=text]::placeholder {
+        color: rgba(17, 17, 17, 0.5); 
+    }
+
+    .search-results-dropdown {
+        position: absolute;
+        top: 100%; 
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.95); 
+        border: 1px solid #ccc;
+        border-top: none;
+        max-height: 350px;
+        overflow-y: auto;
+        z-index: 1001;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        display: none; 
+    }
+
+    .search-result-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .search-result-item:last-child {
+        border-bottom: none;
+    }
+
+    .search-result-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .result-title {
+        font-weight: bold;
+        color: #000000;
+        font-size: 15px;
+        font-family: sans-serif;
+    }
+
+    .result-desc {
+        font-size: 13px;
+        color: #555;
+        margin-top: 4px;
+        font-family: "Times New Roman", Times, serif;
+        font-style: italic; 
+    } 
+
+    .btn-container {
+        position: fixed; 
+        bottom: 30px;       
+        left: 10%;          
+        transform: translateX(-50%); 
+        z-index: 9999;      
+    }
+
+
+    .guncel-btn {
+       padding: 15px 20px;
+       font-size: 1rem;
+       background-color: #000000;
+       color: white;
+       border: 1px solid #000000;
+       cursor: pointer;
+       text-transform: uppercase;
+       transition: background-color 0.2s ease, color 0.2s ease;
+       white-space: nowrap; 
+    }
+
+    .guncel-btn:hover {
+       background-color: #ffffff;
+       color: #000000;
+       border: 1px solid #000000;
+    }
+
+    .inrip {
+        position: fixed;
+        bottom: 30px;
+        left: 91%;
+        transform: translateX(-50%);
+        z-index: 9999;
+    }
+
+    @media screen and (max-width: 768px) {
+        body {
+            background-image: none !important;
+            background-color: #EFEFED !important;
+        }
+        
+        .arsiv-list {
+            grid-template-columns: 1fr !important; 
+            gap: 15px 0 !important;
+        }
+
+        .arsiv-list li a {
+            display: block !important;
+            font-size: 18px !important; 
+            padding: 10px 0 !important;
+        }
+
+        .gelecek-list {
+            grid-template-columns: 1fr !important;
+            gap: 15px 0 !important;
+        }
+
+        .gelecek-list li a {
+            display: block !important;
+            font-size: 18px !important;
+            padding: 10px 0 !important;
+        }
+
+        .topnav {
+            position: relative !important;
+            display: block !important;
+            padding: 10px !important;
+            padding-bottom: 90px !important; 
+        }
+
+        .search-wrapper {
+            width: 100% !important;
+            margin-right: 0 !important;
+            position: relative !important;
+        }
+
+        .topnav input[type=text] {
+            height: 52px !important; 
+            font-size: 18px !important;
+            padding: 12px !important;
+            border-radius: 8px 8px 0 0 !important; 
+            border: 1px solid #b5b5b5 !important;
+            background-color: rgba(239, 239, 237, 0.9) !important; 
+        }
+
+        .search-results-dropdown {
+            top: 52px !important;
+            z-index: 99999 !important; 
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2) !important;
+        }
+
+        .btn-container {
+            position: relative  !important;
+            margin-top: 20px !important;
+            margin-bottom: 20px !important;
+            order: -1;
+            z-index: 100 !important;
+            left: 50%;
+        }
+    }
 </style>
+</head>
 
 <body>
-
-    <div class="anaresim">
-        <img src="INRIProject.png" width="350">
+    <div class="topnav">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="Aramak için.." autocomplete="off">
+            <div id="resultsDropdown" class="search-results-dropdown"></div>
+        </div>
     </div>
 
-    <div class="augus">
-        <img src="augus.png" width="350">
+    <div class="btn-container">
+        <a href="guncel.html">
+          <button class="guncel-btn">Katkıda Bulunmak İçin Tıklayın!</button>
+        </a>
     </div>
 
-    <div class="disco">
-        <img src="disco.png" width="350">
+    <div class="inrip">
+        <a href="inriportal.html">
+            <img src="INRIProject.png" width="250">
+        </a>
     </div>
 
-    <div class="yazi">
-        <h2><em>INRI Project, Dijtal Sosyal Bilimler alanında Türkiye'de faaliyet gösteren bir kuruluştur. </em> <em>Amacımız Türkiye'de bulunan <br> tarihi eserlerin, belgelerin ve yerlerin dijitalleştirilmesi ve görüntülenmeye hazır bir şekilde paylaşılmasıdır.</em></h2>
+    <div style="max-width: 650px; margin:0 auto; padding: 30px 20px;">
+        <h1 style="font-size: 80px; font-weight: 900;">INRI Archive</h1>
+        <div class="duyuru-kutusu"> 
+        </div>
+        <p><em>INRI Archive bir INRI Project projesidir</em></p>
+        <p style="text-align: center;"><a href="mailto:mistervatsin0@gmail.com"><em>Öneri ve Şikayetleriniz İçin</em></a></p>
+        <p style="text-align: center;"><a href="https://patreon.com/inriarchive?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink"><em>Destek Olmak İsterseniz PATREON</em></a></p>
+        <p style="text-align: center;"><a href="https://independent.academia.edu/Mehmet%C3%96zkan181"><em>Academia.edu Sayfasından PDF Halinde Dosyalara Ulaşabilirsiniz</em></a></p>
+        <h2>Arşivdeki Belgeler</h2>
+
+        <ul class="arsiv-list">
+            <li><a href="minber.ro.html">MİNBER GAZETESİ MUSTAFA KEMAL PAŞA RÖPORTAJI (1918)</a></li>
+            <li><a href="hat.html">DEVLET BELGELERİ</a></li>
+            <li><a href="midhat.html">MİDHAT PAŞA SERİSİ</a></li>
+            <li><a href="hat10.html">MAHMUD ŞEVKET PAŞA'YA GÖNDERİLEN RAPOR</a></li>
+            <li><a href="talim.html">TALİM VE TERBİYE (M.KEMAL)</a></li>
+            <li><a href="93harbi.html">1293 SEFERİ</a>
+            <li><a href="turkyunan.html">TÜRK-YUNAN ANLAŞMA METNİ</a></li>
+            <li><a href="ittihadni.html">İTCF NİZAMNAMESİ</a></li>
+            
+        </ul>
+
+        <h2>Yakında Gelecekler</h2>
+
+        <ul class="gelecek-list">
+            <li><a href="muhcog.html">MUHTASAR COĞRAFYA</a>
+            <li><a href="osmkum.html">OSMANLI KUMANDANLARI (1913)</a></li>
+            <li><a href="harbi.html">HARBİ UMUMİNİN MENŞEİLERİ</a></li>
+            <li><a href="napolyon.html">NAPOLYON'UN SÜRGÜN HATIRALARI</a></li>
+            <li><a href="hammurabi.html">HAMMURABİ KANUNLARI</a></li>
+
+        </ul>
     </div>
 
-    <h3>PROJELERİMİZ</h3>
+<script>
+// ARŞİV VERİTABANI
+const arsivVeritabani = [
+    {
+       title: "MİNBER GAZETESİ RÖPORTAJI (1918)",
+       url: "minber.ro.html",
+       desc: "Mustafa Kemal Atatürk'ün 1918 tarihinde Cihan Harbi'nin Bitişinden Hemen Sonra Verdiği Röportaj",
+       keywords: "Mustafa Kemal Cihan Harbi Savaş Röportaj Atatürk Osmanlı Cephe"
+    },
+    {
+        title:"DEVLET BELGELERİ",
+        url:"hat.html",
+        desc:"Devlet Arşivlerine Ait Belgeler",
+        keywords: "Osmanlıca Devlet Arşiv Belge Eski"
+    },
+    {
+        title:"MİDHAT PAŞA SERİSİ",
+        url:"midhat.html",
+        desc: "Osmanlı'nın Önemli Devlet Adamlarından Midhat Paşa İle Alakalı Belgeler",
+        keywords: "Midhat Paşa Abdülhamid Jön Türk Tanzimat Vali Taif"
+    },
+    {
+        title:"MAHMUD ŞEVKET PAŞA'YA RAPOR (1912)",
+        url:"hat10.html",
+        desc:"Mahmud Şevket Paşa'ya Ahmet Muhtar Tarafından Gönderilen 1912 Tarihli Rapor",
+        keywords:"Mahmud Şevket Paşa Savaş Harp Belge Osmanlıca"
+    },
+    {
+        title:"NAPOLEON'UN MISIR ÇIKARMASI ÜZERİNE (1798)",
+        url:"hat1.html",
+        desc:"Napoleon'un Mısır'ı İşgali Hakkında Onun Açıklamaları ve İmzasını İçeren Belge",
+        keywords:"Napoleon Napolyon Mısır Harp Savaş Osmanlıca Belge"
+    },
+    {
+        title:"ENVER VE HALİL PAŞALAR HAKKINDA KARAR (1921)",
+        url:"hat2.html",
+        desc:"Enver ve Halil Paşa Ahalisi Hakkında Komisyon Tarafından Alınan Giriş Yasağı",
+        keywords:"Enver Paşa Halil Paşa Karar Osmanlıca Belge"
+    },
+    {
+        title:"CEMAL PAŞA'NIN ŞEHADETİ",
+        url:"hat3.html",
+        desc:"Cemal Paşa'nın Şehadeti Hakkında Alınan Bazı İstihbarat Raporları",
+        keywords:"Cemal Paşa Şehadet Rapor İstihbarat Osmanlıca Belge"
+    },
+    {
+        title:"MUSTAFA KEMAL PAŞA'NIN SİNEYİ MİLLETE DÖNMESİ (1919)",
+        url:"hat4.html",
+        desc:"Mustafa Kemal Paşa'nın Askerlikten İstifasını Açıklayan Telgraf",
+        keywords:"Mustafa Kemal Paşa Asker Harp İstifa Belge"
+    },
+    {
+        title:"ENVER PAŞA'NIN MÜHRÜ",
+        url:"hat6.html",
+        desc:"Enver Paşa'nın Mührü Yazılı Bir Belge",
+        keywords:"Enver Paşa İmza Mühür Belge"
+    },
+    {
+        title:"ENVER PAŞA'NIN SARIKAMIŞ'TAKİ DURUMU",
+        url:"hat9.html",
+        desc:"Enver Paşa'nın Sarıkamış'taki Durumu Hakkında Bir Rapor",
+        keywords:"Enver Paşa Sarıkamış Belge Osmanlıca Belge"
+    },
+    {
+        title:"TALİM VE TERBİYE",
+        url:"talim.html",
+        desc:"Mustafa Kemal'in 1915 Senesinde Yayımladığı Askerlik Hakkındaki Kitapçık",
+        keywords:"Mustafa Kemal Atatürk Askerlik Kitap Kitapçık Osmanlıca Belge"
+    },
+    {
+        title:"1293 Seferi",
+        url:"93harbi.html",
+        desc:"1293 Seferi'ni Bir Asker Gözüyle Anlatan Osmanlıca Bir Eser",
+        keywords:"Osmanlı 93 Harbi Asker Savaş Avrupa Anadolu"
+    },
+    {
+        title:"TÜRK-YUNAN ANLAŞMA METNİ",
+        url:"turkyunan.html",
+        desc:"Türk-Yunan Mübadelesi Sırasında Hükümetler Arasında Sorunların Çözümüne Dair İmzalanan Bir Anlaşma Metni",
+        keywords:"Mübadele Yunan Türk Anadolu Yunanistan Türkiye Değişim"
+    }
+];
 
-    <div class="inria">
-        <a href="index.html">INRI Archive</a>
-    </div>
+const searchInput = document.getElementById("searchInput");
+const resultsDropdown = document.getElementById("resultsDropdown");
 
+function wikipediaTarziAra() {
+    let query = searchInput.value.toLowerCase().trim();
+    resultsDropdown.innerHTML = ""; 
 
+    if (query === "") {
+        resultsDropdown.style.display = "none";
+        return;
+    }
+
+    let bulunanlar = arsivVeritabani.filter(item => {
+        return item.title.toLowerCase().includes(query) || 
+               item.desc.toLowerCase().includes(query) || 
+               item.keywords.toLowerCase().includes(query);
+    });
+
+    if (bulunanlar.length > 0) {
+        bulunanlar.forEach(item => {
+            let div = document.createElement("div");
+            div.className = "search-result-item";
+            div.innerHTML = `
+                <span class="result-title">${item.title}</span>
+                <span class="result-desc">${item.desc}</span>
+            `;
+            div.onclick = function() {
+                window.location.href = item.url;
+            };
+            resultsDropdown.appendChild(div);
+        });
+        resultsDropdown.style.display = "block"; 
+    } else {
+        let div = document.createElement("div");
+        div.className = "search-result-item";
+        div.style.cursor = "default";
+        div.innerHTML = `<span class="result-desc" style="text-align:center;">Aradığınız kelime bulunamadı.</span>`;
+        resultsDropdown.appendChild(div);
+        resultsDropdown.style.display = "block";
+    }
+}
+
+searchInput.addEventListener("input", wikipediaTarziAra);
+
+document.addEventListener("click", function(event) {
+    if (!searchInput.contains(event.target) && !resultsDropdown.contains(event.target)) {
+        resultsDropdown.style.display = "none";
+    }
+});
+</script>
 </body>
-
 </html>
